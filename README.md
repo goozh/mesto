@@ -18,6 +18,7 @@ Mesto: интерактивная страница, куда можно доба
 
 **Ссылка на GitHub Pages**
 
+https://goozh.github.io/mesto/index.html
 
 
 
