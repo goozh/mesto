@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class="root">
+  <div class="page">
+    <div class="popup">
+      <fieldset class="popup__container">
+        <img src="./images/close_icon.svg" alt="Закрыть окно" class="popup__close">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__text-field popup__text-field_value_name" type="text" name="name" id="name">
+        <div class="popup__line"></div>
+        <input class="popup__text-field popup__text-field_value_desc" type="text" name="desc" id="desc">
+        <div class="popup__line"></div>
+        <!-- div а не button  чтобы избавиться от рамок которые рисует браузер-->
+        <div class="popup__submit-button">
+          <p class="popup__submit-title">Сохранить</p>
+        </div>
+      </fieldset>
+    </div>
+    <header class="header">
+    <a href="#" target="_self" class="header__logo"></a>
+    <div class="header__line"></div>
+    </header>
+    <main class="main">
+      <section class="profile">
+        <img src="./images/avatar.png" alt="Фото профиля пользователя" class="profile__avatar">
+        <div class="profile__info">
+           <div class="profile__line-container">           <!-- контейнер для выравнивания по одной линии title и edit-button-->
+              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <div class="profile__edit-button"></div>
+            </div>
+          <p class="profile__subtitle">Исследователь океана</p>
+        </div>
+        <div class="profile_add-button"></div>
+      </section>
+      <section class="elements">
+        <div class="element">
+          <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск" class="element__image">
+          <div class="element__caption">
+            <h2 class="element__title">Карачаевск</h2>
+            <img src="./images/like.svg" alt="Отметить как понравившуюся" class="element__like">
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="element__image">
+          <div class="element__caption">
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <img src="./images/like.svg" alt="Отметить как понравившуюся" class="element__like">
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай" class="element__image">
+          <div class="element__caption">
+            <h2 class="element__title">Домбай</h2>
+            <img src="./images/like.svg" alt="Отметить как понравившуюся" class="element__like">
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/place__image-1.jpg" alt="Куршская коса" class="element__image">
+          <div class="element__caption">
+            <h2 class="element__title">Куршская коса</h2>
+            <img src="./images/like.svg" alt="Отметить как понравившуюся" class="element__like">
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/place__image-4.jpg" alt="Байкал" class="element__image">
+          <div class="element__caption">
+            <h2 class="element__title">Байкал</h2>
+            <img src="./images/like.svg" alt="Отметить как понравившуюся" class="element__like">
+          </div>
+        </div>
+        <div class="element">
+          <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкесия" class="element__image">
+          <div class="element__caption">
+            <h2 class="element__title">Карачаево-Черкесия</h2>
+            <img src="./images/like.svg" alt="Отметить как понравившуюся" class="element__like">
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+.profile__subtitle {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 0;
+  max-width: 293px;
+  word-wrap: break-word;
+}
+
+@media screen and (max-width: 710px) {
+  .profile__subtitle {
+    margin: auto;
+    font-size: calc(0.0102564 * 100vw + 10.7179px); /*от 18 до 14 для 100vw от 710 до 320*/
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__subtitle {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}

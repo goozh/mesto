@@ -1,0 +1,14 @@
+.popup__submit-title {
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.22;
+  margin: auto;
+}
+
+@media screen and (max-width: 525px) {
+  .popup__submit-title {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+}

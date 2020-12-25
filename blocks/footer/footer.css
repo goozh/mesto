@@ -1,0 +1,21 @@
+.footer {
+  padding: 66px 0 60px;
+}
+
+@media screen and (max-width: 907px) {
+  .footer  {
+    margin: 0 calc(638.259px - 0.703704 * 100vw) 0; /*от 0 до 19 для 100vw от 907 до 880*/
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .footer  {
+    margin: 0 19px 0;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .footer  {
+    padding: 48px 0 36px;
+  }
+}
