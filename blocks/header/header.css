@@ -6,6 +6,13 @@
   padding: 45px 0 0;
 }
 
+.header::after {
+  content: '';
+  border-bottom: 1px solid #545454;
+  opacity: 0.7;
+  width: 100%;
+}
+
 @media screen and (max-width: 710px) {
   .header {
     padding: 28px 0 0;
