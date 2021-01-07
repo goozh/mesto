@@ -43,8 +43,15 @@ function cardsInit(cardsArr) {
     const newElement = elementTemplate.cloneNode(true);
     newElement.querySelector('.element__title').textContent = cardsArr[i].name;
     newElement.querySelector('.element__image').src = cardsArr[i].link;
+    //newElement.querySelector('.element__like').classList.add('element__like_active');
+    newElement.querySelector('.element__like').addEventListener('click', like);
+    console.log(newElement.querySelector('.element__like').classList);
     elementsList.append(newElement);
   }
+}
+
+function like(evt) {
+  evt.currentTarget.classList.toggle('element__like_active');
 }
 
 function openPopup(evt) {
@@ -80,7 +87,7 @@ function createCard(evt) {
   const newElement = elementTemplate.cloneNode(true);
   newElement.querySelector('.element__title').textContent = evt.currentTarget.parentElement.querySelector('#name').value;
   newElement.querySelector('.element__image').src = evt.currentTarget.parentElement.querySelector('#link').value;
-  elementsList.append(newElement);
+  elementsList.prepend(newElement);
   evt.currentTarget.parentElement.querySelector('#name').value = null;
   evt.currentTarget.parentElement.querySelector('#link').value = null;
   closePopupHandler(evt);
