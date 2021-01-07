@@ -43,9 +43,7 @@ function cardsInit(cardsArr) {
     const newElement = elementTemplate.cloneNode(true);
     newElement.querySelector('.element__title').textContent = cardsArr[i].name;
     newElement.querySelector('.element__image').src = cardsArr[i].link;
-    //newElement.querySelector('.element__like').classList.add('element__like_active');
     newElement.querySelector('.element__like').addEventListener('click', like);
-    console.log(newElement.querySelector('.element__like').classList);
     elementsList.append(newElement);
   }
 }
