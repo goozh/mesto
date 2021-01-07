@@ -1,27 +1,89 @@
-let btnEditProfile = document.querySelector('.profile__edit-button');
-let popup = document.querySelector('.popup');
-let btnClosePopup = popup.querySelector('.popup__close');
-let btnSubmit = popup.querySelector('.popup__submit-button');
-let popupInputName = popup.querySelector('.popup__text-field_value_name');
-let popupInputDescription = popup.querySelector('.popup__text-field_value_desc');
-let profileTitle = document.querySelector('.profile__title');
-let profileSubtitle = document.querySelector('.profile__subtitle');
+const btnEditProfile = document.querySelector('.profile__edit-button');
+const btnAddCard = document.querySelector('.profile__add-button');
+const popup = document.querySelector('.popup');
+const btnClosePopup = document.querySelectorAll('.popup__close');
+const btnSubmit = popup.querySelector('.popup__submit-button');
+const btnCreateCard = document.querySelector('#create-card-button');
+const popupInputName = popup.querySelector('.popup__text-field_value_name');
+const popupInputDescription = popup.querySelector('.popup__text-field_value_desc');
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
 
-function openPopupHandler() {
-  popup.classList.add('popup_opened');
-  popupInputName.value = profileTitle.textContent;
-  popupInputDescription.value = profileSubtitle.textContent;
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+function cardsInit(cardsArr) {
+  const elementsList = document.querySelector('.elements__list');
+  const elementTemplate = document.querySelector('#element-template').content;
+  for (let i=0; i<cardsArr.length; i++) {
+    const newElement = elementTemplate.cloneNode(true);
+    newElement.querySelector('.element__title').textContent = cardsArr[i].name;
+    newElement.querySelector('.element__image').src = cardsArr[i].link;
+    elementsList.append(newElement);
+  }
 }
 
-function closePopupHandler() {
-  popup.classList.remove('popup_opened');
+function openPopup(evt) {
+  let popup;
+  if (evt.currentTarget.classList.contains('profile__edit-button')) {
+    popup = document.querySelector('#popup-profile-edit');
+    popupInputName.value = profileTitle.textContent;
+    popupInputDescription.value = profileSubtitle.textContent;
+  }
+  else if (evt.currentTarget.classList.contains('profile__add-button'))
+    popup = document.querySelector('#popup-add-card');
+
+  popup.classList.add('popup_opened');
+}
+
+function closePopupHandler(evt) {
+  evt.currentTarget.closest(".popup").classList.remove('popup_opened');
+  // popup.classList.remove('popup_opened');
 }
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
   profileTitle.textContent = popupInputName.value;
   profileSubtitle.textContent = popupInputDescription.value;
-  popup.classList.remove('popup_opened');
+  closePopupHandler(evt);
+  //popup.classList.remove('popup_opened');
+}
+
+function createCard(evt) {
+  evt.preventDefault();
+  const elementsList = document.querySelector('.elements__list');
+  const elementTemplate = document.querySelector('#element-template').content;
+  const newElement = elementTemplate.cloneNode(true);
+  newElement.querySelector('.element__title').textContent = evt.currentTarget.parentElement.querySelector('#name').value;
+  newElement.querySelector('.element__image').src = evt.currentTarget.parentElement.querySelector('#link').value;
+  elementsList.append(newElement);
+  evt.currentTarget.parentElement.querySelector('#name').value = null;
+  evt.currentTarget.parentElement.querySelector('#link').value = null;
+  closePopupHandler(evt);
 }
 
 function keyHandler(evt) {
@@ -36,7 +98,11 @@ function keyHandler(evt) {
     }
 }
 
-btnEditProfile.addEventListener('click', openPopupHandler);
-btnClosePopup.addEventListener('click', closePopupHandler);
+cardsInit(initialCards);
+btnEditProfile.addEventListener('click', openPopup);
+btnAddCard.addEventListener('click', openPopup);
+btnClosePopup[0].addEventListener('click', closePopupHandler);
+btnClosePopup[1].addEventListener('click', closePopupHandler);
 btnSubmit.addEventListener('click', formSubmitHandler);
-document.addEventListener('keydown', keyHandler)
+btnCreateCard.addEventListener('click', createCard);
+document.addEventListener('keydown', keyHandler);

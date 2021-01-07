@@ -25,7 +25,7 @@
       </section>
       <section class="elements">
         <ul class="elements__list">
-          <li class="element">
+          <!-- <li class="element">
             <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск" class="element__image">
             <div class="element__caption">
               <h2 class="element__title">Карачаевск</h2>
@@ -66,14 +66,23 @@
               <h2 class="element__title">Карачаево-Черкесия</h2>
               <button class="element__like" name="element__like" type="button"></button>
             </div>
-          </li>
+          </li> -->
+          <template class="element-template" id="element-template">
+            <li class="element">
+              <img src="" alt="" class="element__image">
+              <div class="element__caption">
+                <h2 class="element__title"></h2>
+                <button class="element__like" name="element__like" type="button"></button>
+              </div>
+            </li>
+          </template>
         </ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup" id="popup-profile-edit">
       <div class="popup__container">
         <button class="popup__close" name="popup__close" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -81,6 +90,17 @@
           <input class="popup__text-field popup__text-field_value_name" type="text" name="name" id="name">
           <input class="popup__text-field popup__text-field_value_desc" type="text" name="desc" id="desc">
           <button class="popup__submit-button" name="popup__submit-button" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup" id="popup-add-card">
+      <div class="popup__container">
+        <button class="popup__close" name="popup__close" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__edit-form">
+          <input class="popup__text-field popup__text-field_value_name" type="text" name="name" id="name">
+          <input class="popup__text-field popup__text-field_value_desc" type="text" name="link" id="link">
+          <button class="popup__submit-button" id="create-card-button" name="create-card-button" type="submit">Создать</button>
         </form>
       </div>
     </div>
