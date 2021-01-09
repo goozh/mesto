@@ -43,8 +43,10 @@ function cardsInit(cardsArr) {
     const newElement = elementTemplate.cloneNode(true);
     newElement.querySelector('.element__title').textContent = cardsArr[i].name;
     newElement.querySelector('.element__image').src = cardsArr[i].link;
+    newElement.querySelector('.element__image').alt = cardsArr[i].name;
     newElement.querySelector('.element__like').addEventListener('click', elementLike);
     newElement.querySelector('.element__remove').addEventListener('click', elementRemove);
+    newElement.querySelector('.element__image').addEventListener('click', openPopup);
     elementsList.append(newElement);
   }
 }
@@ -65,14 +67,19 @@ function openPopup(evt) {
     popupInputDescription.value = profileSubtitle.textContent;
   }
   else if (evt.currentTarget.classList.contains('profile__add-button'))
-    popup = document.querySelector('#popup-add-card');
+    popup = document.querySelector('#popup-add-card')
+  else if (evt.currentTarget.classList.contains('element__image')) {
+    popup = document.querySelector('#popup-view');
+    popup.querySelector('.popup__image').src = evt.currentTarget.src;
+    popup.querySelector('.popup__image').alt = evt.currentTarget.parentElement.querySelector('.element__title').textContent;
+    popup.querySelector('.popup__image-caption').textContent = evt.currentTarget.parentElement.querySelector('.element__title').textContent;
+  }
 
   popup.classList.add('popup_opened');
 }
 
 function closePopupHandler(evt) {
   evt.currentTarget.closest(".popup").classList.remove('popup_opened');
-  // popup.classList.remove('popup_opened');
 }
 
 function formSubmitHandler(evt) {
@@ -80,7 +87,6 @@ function formSubmitHandler(evt) {
   profileTitle.textContent = popupInputName.value;
   profileSubtitle.textContent = popupInputDescription.value;
   closePopupHandler(evt);
-  //popup.classList.remove('popup_opened');
 }
 
 function createCard(evt) {
@@ -115,6 +121,7 @@ btnEditProfile.addEventListener('click', openPopup);
 btnAddCard.addEventListener('click', openPopup);
 btnClosePopup[0].addEventListener('click', closePopupHandler);
 btnClosePopup[1].addEventListener('click', closePopupHandler);
+btnClosePopup[2].addEventListener('click', closePopupHandler);
 btnSubmit.addEventListener('click', formSubmitHandler);
 btnCreateCard.addEventListener('click', createCard);
 document.addEventListener('keydown', keyHandler);
