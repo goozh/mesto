@@ -25,5 +25,6 @@
     height: 26px;
     right: 0;
     top: -45px;
+    background-image: url('../../../images/close_icon_thin.svg');
   }
 }
