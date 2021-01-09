@@ -43,13 +43,18 @@ function cardsInit(cardsArr) {
     const newElement = elementTemplate.cloneNode(true);
     newElement.querySelector('.element__title').textContent = cardsArr[i].name;
     newElement.querySelector('.element__image').src = cardsArr[i].link;
-    newElement.querySelector('.element__like').addEventListener('click', like);
+    newElement.querySelector('.element__like').addEventListener('click', elementLike);
+    newElement.querySelector('.element__remove').addEventListener('click', elementRemove);
     elementsList.append(newElement);
   }
 }
 
-function like(evt) {
+function elementLike(evt) {
   evt.currentTarget.classList.toggle('element__like_active');
+}
+
+function elementRemove(evt) {
+  evt.currentTarget.closest('.element').remove();
 }
 
 function openPopup(evt) {
@@ -85,6 +90,8 @@ function createCard(evt) {
   const newElement = elementTemplate.cloneNode(true);
   newElement.querySelector('.element__title').textContent = evt.currentTarget.parentElement.querySelector('#name').value;
   newElement.querySelector('.element__image').src = evt.currentTarget.parentElement.querySelector('#link').value;
+  newElement.querySelector('.element__like').addEventListener('click', elementLike);
+  newElement.querySelector('.element__remove').addEventListener('click', elementRemove);
   elementsList.prepend(newElement);
   evt.currentTarget.parentElement.querySelector('#name').value = null;
   evt.currentTarget.parentElement.querySelector('#link').value = null;
