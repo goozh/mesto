@@ -9,3 +9,10 @@
   padding: 0;
   border: 0;
 }
+
+@media screen and (max-width: 525px) {
+  .popup__containe_type_form {
+    width: 282px;
+    }
+}
+
