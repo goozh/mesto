@@ -25,48 +25,6 @@
       </section>
       <section class="elements">
         <ul class="elements__list">
-          <!-- <li class="element">
-            <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск" class="element__image">
-            <div class="element__caption">
-              <h2 class="element__title">Карачаевск</h2>
-              <button class="element__like" name="element__like" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="element__image">
-            <div class="element__caption">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button class="element__like" name="element__like" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай" class="element__image">
-            <div class="element__caption">
-              <h2 class="element__title">Домбай</h2>
-              <button class="element__like" name="element__like" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/place__image-1.jpg" alt="Куршская коса" class="element__image">
-            <div class="element__caption">
-              <h2 class="element__title">Куршская коса</h2>
-              <button class="element__like" name="element__like" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/place__image-4.jpg" alt="Байкал" class="element__image">
-            <div class="element__caption">
-              <h2 class="element__title">Байкал</h2>
-              <button class="element__like" name="element__like" type="button"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкесия" class="element__image">
-            <div class="element__caption">
-              <h2 class="element__title">Карачаево-Черкесия</h2>
-              <button class="element__like" name="element__like" type="button"></button>
-            </div>
-          </li> -->
           <template class="element-template" id="element-template">
             <li class="element">
               <img src="" alt="" class="element__image">
@@ -88,8 +46,8 @@
         <button class="popup__close" name="popup__close" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__edit-form">
-          <input class="popup__text-field popup__text-field_value_name" type="text" name="name" id="name">
-          <input class="popup__text-field popup__text-field_value_desc" type="text" name="desc" id="desc">
+          <input class="popup__text-field popup__text-field_value_name" type="text" id="profile-name">
+          <input class="popup__text-field popup__text-field_value_desc" type="text" id="profile-desc">
           <button class="popup__submit-button" name="popup__submit-button" type="submit">Сохранить</button>
         </form>
       </div>
@@ -99,8 +57,8 @@
         <button class="popup__close" name="popup__close" type="button"></button>
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__edit-form">
-          <input class="popup__text-field popup__text-field_value_name" type="text" name="name" id="name" placeholder="Название">
-          <input class="popup__text-field popup__text-field_value_desc" type="text" name="link" id="link" placeholder="Ссылка на страницу">
+          <input class="popup__text-field popup__text-field_value_name" type="text" id="card-name" placeholder="Название">
+          <input class="popup__text-field popup__text-field_value_desc" type="text" id="card-link" placeholder="Ссылка на страницу">
           <button class="popup__submit-button" id="create-card-button" name="create-card-button" type="submit">Создать</button>
         </form>
       </div>
@@ -108,7 +66,7 @@
     <div class="popup" id="popup-view">
       <div class="popup__container popup__container_type_view">
         <button class="popup__close" name="popup__close" type="button"></button>
-        <img src="" alt="увеличенное изображение" class="popup__image">
+        <img src="#" alt="увеличенное изображение" class="popup__image">
         <h2 class="popup__image-caption"></h2>
       </div>
     </div>
