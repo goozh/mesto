@@ -106,18 +106,6 @@ function formSubmitHandler(evt) {
   closePopupHandler(evt);
 }
 
-function keyHandler(evt) {
-  if (popup.classList.contains('popup_opened'))
-    switch(event.key) {
-      case 'Enter':
-        formSubmitHandler(evt);
-        break;
-      case 'Escape':
-        closePopupHandler();
-        break
-    }
-}
-
 cardsInit(initialCards);
 btnEditProfile.addEventListener('click', openPopupHandler);
 btnAddCard.addEventListener('click', openPopupHandler);
@@ -126,4 +114,3 @@ btnClosePopup[1].addEventListener('click', closePopupHandler);
 btnClosePopup[2].addEventListener('click', closePopupHandler);
 btnSubmit.addEventListener('click', formSubmitHandler);
 btnCreateCard.addEventListener('click', createCardHandler);
-document.addEventListener('keydown', keyHandler);
