@@ -10,3 +10,7 @@
   background-color: transparent;
   cursor: pointer;
 }
+
+.element__remove:hover {
+  opacity: 0.6;
+}
