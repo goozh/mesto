@@ -53,10 +53,15 @@ function createCard(card) {
   return newElement;
 }
 
-// функция добавляет массив карточек cardsArr в элемент wrap
-function cardsInit(cardsArr, wrap) {
-  cardsArr.forEach(element => {
-    wrap.prepend(createCard(element));
+// "отрисовка" карточки card в элемент wrapElement
+function renderCard(card, wrapElement) {
+    wrapElement.prepend(createCard(card));
+}
+
+// "отрисовка" карточек из массива cardsArray в элемент wrapElement
+function renderCardFromArray(cardsArray, wrapElement) {
+  cardsArray.forEach(card => {
+    renderCard(card, wrapElement);
   });
 }
 
@@ -69,20 +74,12 @@ function closePopup(popupElement) {
 }
 
 function handleCreateCardButton(evt) {
-  const card = {
+  evt.preventDefault();
+  renderCard({
     name: popupCardNameInput.value,
     link: popupCardSourceInput.value
-  }
-  evt.preventDefault();
-  elementsList.prepend(createCard(card));
-  popupCardNameInput.value = '';
-  popupCardSourceInput.value = '';
-  closePopup(popupAddCard);
-}
-
-function handleAddCardCloseButton() {
-  popupCardNameInput.value = '';
-  popupCardSourceInput.value = '';
+  }, elementsList);
+  popupAddCardForm.reset();
   closePopup(popupAddCard);
 }
 
@@ -107,7 +104,7 @@ function handleEditProfileSubmitButton(evt) {
   closePopup(popupEditProfile);
 }
 
-cardsInit(initialCards, elementsList);
+initCardFromArray(initialCards, elementsList);
 editProfileButton.addEventListener('click', handleEditProfileButton);
 addCardButton.addEventListener('click', () => openPopup(popupAddCard));
 
@@ -117,5 +114,5 @@ popupAddCardForm.addEventListener('submit', handleCreateCardButton);
 
 // обработка кнопок закрытия окон:
 popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
-popupAddCardCloseButton.addEventListener('click', handleAddCardCloseButton);
+popupAddCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
 popupViewImageCloseButton.addEventListener('click', () => closePopup(popupViewImage));
