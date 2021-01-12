@@ -104,7 +104,7 @@ function handleEditProfileSubmitButton(evt) {
   closePopup(popupEditProfile);
 }
 
-initCardFromArray(initialCards, elementsList);
+renderCardFromArray(initialCards, elementsList);
 editProfileButton.addEventListener('click', handleEditProfileButton);
 addCardButton.addEventListener('click', () => openPopup(popupAddCard));
 
