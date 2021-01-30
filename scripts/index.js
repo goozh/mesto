@@ -11,7 +11,7 @@ const elementTemplate = elementsList.querySelector('.element-template').content;
 // элементы окна редактирования профиля:
 const popupEditProfile = document.querySelector('#popup-profile-edit');
 const popupEditProfileCloseButton = popupEditProfile.querySelector('.popup__close');
-const popupEditProfileSubmitButton = popupEditProfile.querySelector('.popup__submit-button');
+// const popupEditProfileSubmitButton = popupEditProfile.querySelector('.popup__submit-button');
 const popupEditProfileForm = popupEditProfile.querySelector('.popup__edit-form');
 const popupInputName = popupEditProfile.querySelector('.popup__text-field_value_name');
 const popupInputDescription = popupEditProfile.querySelector('.popup__text-field_value_desc');
