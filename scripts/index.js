@@ -11,16 +11,15 @@ const elementTemplate = elementsList.querySelector('.element-template').content;
 // элементы окна редактирования профиля:
 const popupEditProfile = document.querySelector('#popup-profile-edit');
 const popupEditProfileCloseButton = popupEditProfile.querySelector('.popup__close');
-// const popupEditProfileSubmitButton = popupEditProfile.querySelector('.popup__submit-button');
-const popupEditProfileForm = popupEditProfile.querySelector('.popup__edit-form');
-const popupInputName = popupEditProfile.querySelector('.popup__text-field_value_name');
-const popupInputDescription = popupEditProfile.querySelector('.popup__text-field_value_desc');
+const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
+const popupInputName = popupEditProfile.querySelector('.popup__input_value_name');
+const popupInputDescription = popupEditProfile.querySelector('.popup__input_value_desc');
 
 // элементы окна добавления карточки
 const popupAddCard = document.querySelector('#popup-add-card');
-const popupAddCardForm = popupAddCard.querySelector('.popup__edit-form');
-const popupCardNameInput = popupAddCard.querySelector('.popup__text-field_value_name');
-const popupCardSourceInput = popupAddCard.querySelector('.popup__text-field_value_desc');
+const popupAddCardForm = popupAddCard.querySelector('.popup__form');
+const popupCardNameInput = popupAddCard.querySelector('.popup__input_value_name');
+const popupCardSourceInput = popupAddCard.querySelector('.popup__input_value_desc');
 const popupAddCardCloseButton = popupAddCard.querySelector('.popup__close');
 
 // элементы окна просмотра фото
@@ -104,6 +103,12 @@ function handleEditProfileSubmitButton(evt) {
   closePopup(popupEditProfile);
 }
 
+function handleOverlayClick(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
+}
+
 renderCardFromArray(initialCards, elementsList);
 editProfileButton.addEventListener('click', handleEditProfileButton);
 addCardButton.addEventListener('click', () => openPopup(popupAddCard));
@@ -116,3 +121,9 @@ popupAddCardForm.addEventListener('submit', handleCreateCardButton);
 popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
 popupAddCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
 popupViewImageCloseButton.addEventListener('click', () => closePopup(popupViewImage));
+
+
+// закрытие окон по клику на оверлей:
+popupEditProfile.addEventListener('click', handleOverlayClick);
+popupAddCard.addEventListener('click', handleOverlayClick);
+popupViewImage.addEventListener('click', handleOverlayClick);

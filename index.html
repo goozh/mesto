@@ -45,9 +45,11 @@
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" name="popup__close" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__edit-form">
-          <input class="popup__text-field popup__text-field_value_name" type="text" id="profile-name">
-          <input class="popup__text-field popup__text-field_value_desc" type="text" id="profile-desc">
+        <form class="popup__form" novalidate>
+          <input class="popup__input popup__input_value_name" type="text" id="profile-name" minlength="2" maxlength="40" required placeholder = "Имя">
+          <span class="popup__input-error profile-name-error">Ошибка</span>
+          <input class="popup__input popup__input_value_desc" type="text" id="profile-desc" minlength="2" maxlength="200" required placeholder = "О себе">
+          <span class="popup__input-error profile-desc-error">Ошибка</span>
           <button class="popup__submit-button" name="popup__submit-button" type="submit">Сохранить</button>
         </form>
       </div>
@@ -56,9 +58,11 @@
       <div class="popup__container popup__container_type_form">
         <button class="popup__close" name="popup__close" type="button"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup__edit-form">
-          <input class="popup__text-field popup__text-field_value_name" type="text" id="card-name" placeholder="Название">
-          <input class="popup__text-field popup__text-field_value_desc" type="text" id="card-link" placeholder="Ссылка на страницу">
+        <form class="popup__form" novalidate>
+          <input class="popup__input popup__input_value_name" type="text" id="card-name" maxlength="30" required placeholder="Название">
+          <span class="popup__input-error card-name-error">Ошибка</span>
+          <input class="popup__input popup__input_value_desc" type="url" id="card-link" required placeholder="Ссылка на картинку">
+          <span class="popup__input-error card-link-error">Ошибка</span>
           <button class="popup__submit-button" id="create-card-button" name="create-card-button" type="submit">Создать</button>
         </form>
       </div>
