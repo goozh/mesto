@@ -28,6 +28,9 @@ const popupImage = popupViewImage.querySelector('.popup__image');
 const popupImageTitle = popupViewImage.querySelector('.popup__image-caption');
 const popupViewImageCloseButton = popupViewImage.querySelector('.popup__close');
 
+// создание события для вызова при заполнении значений инпутов
+const inputEvent = new Event('input');
+
 function handleLikeButton(evt) {
   evt.currentTarget.classList.toggle('element__like_active');
 }
@@ -66,10 +69,12 @@ function renderCardFromArray(cardsArray, wrapElement) {
 
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
+  document.addEventListener('keydown', handleKeyDown);
 }
 
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleKeyDown);
 }
 
 function handleCreateCardButton(evt) {
@@ -86,6 +91,8 @@ function handleCreateCardButton(evt) {
 function handleEditProfileButton() {
   popupInputName.value = profileTitle.textContent;
   popupInputDescription.value = profileSubtitle.textContent;
+  popupInputName.dispatchEvent(inputEvent);
+  popupInputDescription.dispatchEvent(inputEvent);
   openPopup(popupEditProfile);
 }
 
@@ -104,8 +111,15 @@ function handleEditProfileSubmitButton(evt) {
 }
 
 function handleOverlayClick(evt) {
-  if (evt.target.classList.contains('popup')) {
+  if ( evt.target.classList.contains('popup') ) {
     closePopup(evt.target);
+  }
+}
+
+function handleKeyDown(evt) {
+  const popupOpened = document.querySelector('.popup_opened');
+  if ( (evt.key === 'Escape') && (popupOpened) ) {
+    closePopup(popupOpened);
   }
 }
 
@@ -124,6 +138,9 @@ popupViewImageCloseButton.addEventListener('click', () => closePopup(popupViewIm
 
 
 // закрытие окон по клику на оверлей:
-popupEditProfile.addEventListener('click', handleOverlayClick);
-popupAddCard.addEventListener('click', handleOverlayClick);
-popupViewImage.addEventListener('click', handleOverlayClick);
+popupEditProfile.addEventListener('mousedown', handleOverlayClick);
+popupAddCard.addEventListener('mousedown', handleOverlayClick);
+popupViewImage.addEventListener('mousedown', handleOverlayClick);
+
+// закрытие окон по нажатию Esc
+document.addEventListener('keydown', handleKeyDown);
