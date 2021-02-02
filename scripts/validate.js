@@ -1,3 +1,11 @@
+const classNamesObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}
 
 function showInputError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -54,11 +62,4 @@ function enableValidation(obj) {
   });
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveButtonClass: 'popup__submit-button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-});
+enableValidation(classNamesObject);

@@ -21,6 +21,7 @@ const popupAddCardForm = popupAddCard.querySelector('.popup__form');
 const popupCardNameInput = popupAddCard.querySelector('.popup__input_value_name');
 const popupCardSourceInput = popupAddCard.querySelector('.popup__input_value_desc');
 const popupAddCardCloseButton = popupAddCard.querySelector('.popup__close');
+const popupAddCardSubmitButton = popupAddCard.querySelector('.popup__submit-button');
 
 // элементы окна просмотра фото
 const popupViewImage = document.querySelector('#popup-view');
@@ -85,6 +86,8 @@ function handleCreateCardButton(evt) {
   }, elementsList);
   popupAddCardForm.reset();
   closePopup(popupAddCard);
+  popupAddCardSubmitButton.classList.add(classNamesObject.inactiveButtonClass);
+  popupAddCardSubmitButton.disabled = true;
 }
 
 // функции-обработчики открытия форм:
@@ -103,6 +106,7 @@ function handleViewImageButton(card) {
   openPopup(popupViewImage);
 }
 
+// функции-обработчики:
 function handleEditProfileSubmitButton(evt) {
   evt.preventDefault();
   profileTitle.textContent = popupInputName.value;
@@ -136,11 +140,7 @@ popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEdit
 popupAddCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
 popupViewImageCloseButton.addEventListener('click', () => closePopup(popupViewImage));
 
-
 // закрытие окон по клику на оверлей:
 popupEditProfile.addEventListener('mousedown', handleOverlayClick);
 popupAddCard.addEventListener('mousedown', handleOverlayClick);
 popupViewImage.addEventListener('mousedown', handleOverlayClick);
-
-// закрытие окон по нажатию Esc
-document.addEventListener('keydown', handleKeyDown);
