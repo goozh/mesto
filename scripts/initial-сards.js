@@ -1,7 +1,7 @@
 const initialCards = [
   {
-    name: 'Ревьюер',
-    link: './images/reviewer.jpg'
+    name: 'Калифорния, США',
+    link: './images/laguna-beach.jpg'
   },
   {
     name: 'Фарерские острова',
