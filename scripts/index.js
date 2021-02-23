@@ -9,7 +9,6 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 
 // элементы секции elements:
 const elementsList = document.querySelector('.elements__list');
-const elementTemplate = elementsList.querySelector('.element-template').content;
 
 // элементы окна редактирования профиля:
 const popupEditProfile = document.querySelector('#popup-profile-edit');
@@ -48,16 +47,16 @@ function renderCard(cardData, wrapElement, templateSelector) {
 
 // отрисовка карточек из массива cardsArray в элемент wrapElement, templateSelector - селектор шаблона карточки
 function renderCardFromArray(cardsArray, wrapElement, templateSelector) {
-  cardsArray.forEach( (data) => {
-    renderCard({
-      ...data,
-      popupViewImage,
-      popupImage,
-      popupImageTitle,
-      popupViewImageCloseButton,
-      openPopup,
-      closePopup
-    }, wrapElement, templateSelector);
+  cardsArray.forEach((data) => {
+    renderCard(
+      {
+        ...data,
+        openPopup,
+        handleViewImageButton,
+      },
+      wrapElement,
+      templateSelector
+    );
   });
 }
 
@@ -74,16 +73,16 @@ function closePopup(popupElement) {
 function handleCreateCardButton(evt) {
   evt.preventDefault();
 
-  renderCard({
-    name: popupCardNameInput.value,
-    link: popupCardSourceInput.value,
-    popupViewImage,
-    popupImage,
-    popupImageTitle,
-    popupViewImageCloseButton,
-    openPopup,
-    closePopup
-  }, elementsList, '.element-template');
+  renderCard(
+    {
+      name: popupCardNameInput.value,
+      link: popupCardSourceInput.value,
+      openPopup,
+      handleViewImageButton,
+    },
+    elementsList,
+    '.element-template'
+  );
 
   popupAddCardForm.reset();
   closePopup(popupAddCard);
@@ -100,6 +99,13 @@ function handleEditProfileButton() {
   openPopup(popupEditProfile);
 }
 
+function handleViewImageButton(card) {
+  popupImageTitle.textContent = card.name;
+  popupImage.src = card.link;
+  popupImage.alt = card.name;
+  openPopup(popupViewImage);
+}
+
 // функции-обработчики:
 function handleEditProfileSubmitButton(evt) {
   evt.preventDefault();
@@ -109,14 +115,14 @@ function handleEditProfileSubmitButton(evt) {
 }
 
 function handleOverlayClick(evt) {
-  if ( evt.target.classList.contains('popup') ) {
+  if (evt.target.classList.contains('popup')) {
     closePopup(evt.target);
   }
 }
 
 function handleKeyDown(evt) {
   const popupOpened = document.querySelector('.popup_opened');
-  if ( (evt.key === 'Escape') && (popupOpened) ) {
+  if (evt.key === 'Escape' && popupOpened) {
     closePopup(popupOpened);
   }
 }
