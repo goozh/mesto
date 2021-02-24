@@ -51,7 +51,6 @@ function renderCardFromArray(cardsArray, wrapElement, templateSelector) {
     renderCard(
       {
         ...data,
-        openPopup,
         handleViewImageButton,
       },
       wrapElement,
@@ -77,7 +76,6 @@ function handleCreateCardButton(evt) {
     {
       name: popupCardNameInput.value,
       link: popupCardSourceInput.value,
-      openPopup,
       handleViewImageButton,
     },
     elementsList,
