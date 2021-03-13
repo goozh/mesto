@@ -1,5 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 // элементы секции profile:
 const editProfileButton = document.querySelector('.profile__edit-button');
@@ -38,27 +39,6 @@ const editProfileFormValidator = new FormValidator(classNames, popupEditProfileF
 // создание события для вызова при заполнении значений инпутов
 const inputEvent = new Event('input');
 
-// отрисовка карточки cardData в элемент wrapElement, templateSelector - селектор шаблона карточки
-function renderCard(cardData, wrapElement, templateSelector) {
-  const card = new Card(cardData, templateSelector);
-  const cardElement = card.generateCard();
-  wrapElement.prepend(cardElement);
-}
-
-// отрисовка карточек из массива cardsArray в элемент wrapElement, templateSelector - селектор шаблона карточки
-function renderCardFromArray(cardsArray, wrapElement, templateSelector) {
-  cardsArray.forEach((data) => {
-    renderCard(
-      {
-        ...data,
-        handleViewImageButton,
-      },
-      wrapElement,
-      templateSelector
-    );
-  });
-}
-
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', handleKeyDown);
@@ -71,16 +51,25 @@ function closePopup(popupElement) {
 
 function handleCreateCardButton(evt) {
   evt.preventDefault();
-
-  renderCard(
+  const card = new Card(
     {
       name: popupCardNameInput.value,
       link: popupCardSourceInput.value,
       handleViewImageButton,
     },
-    elementsList,
     '.element-template'
-  );
+    );
+  cardSection.addItem(card.generateCard());
+
+  // renderCard(
+  //   {
+  //     name: popupCardNameInput.value,
+  //     link: popupCardSourceInput.value,
+  //     handleViewImageButton,
+  //   },
+  //   elementsList,
+  //   '.element-template'
+  // );
 
   popupAddCardForm.reset();
   closePopup(popupAddCard);
@@ -143,9 +132,19 @@ popupEditProfile.addEventListener('mousedown', handleOverlayClick);
 popupAddCard.addEventListener('mousedown', handleOverlayClick);
 popupViewImage.addEventListener('mousedown', handleOverlayClick);
 
-// отрисовка карточек из массива:
-renderCardFromArray(initialCards, elementsList, '.element-template');
-
 // включение валидаторов форм:
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
+
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (element) => {
+      const card = new Card({ name: element.name, link: element.link, handleViewImageButton}, '.element-template');
+      cardSection.addItem(card.generateCard());
+    },
+  },
+  '.elements__list'
+);
+
+cardSection.renderItems();
