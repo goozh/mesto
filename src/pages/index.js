@@ -4,8 +4,9 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import {initialCards} from '../utils/initial-сards.js';
-import {classNames} from '../utils/classNames.js';
+import { initialCards } from '../utils/initial-сards.js';
+import { classNames } from '../utils/classNames.js';
+import './index.css';
 
 // элементы секции profile:
 const editProfileButton = document.querySelector('.profile__edit-button');
@@ -33,7 +34,10 @@ const inputEvent = new Event('input');
 const popupViewImage = new PopupWithImage('#popup-view', '.popup__image', '.popup__image-caption');
 const popupEditProfile = new PopupWithForm('#popup-profile-edit', handleEditProfileSubmitButton);
 const popupAddCard = new PopupWithForm('#popup-add-card', handleCreateCardButton);
-const userInfo = new UserInfo({usernameSelector: '.profile__title', userInfoSelector: '.profile__subtitle'});
+const userInfo = new UserInfo({
+  usernameSelector: '.profile__title',
+  userInfoSelector: '.profile__subtitle',
+});
 
 // установка слушателей для окон
 popupEditProfile.setEventListeners();
@@ -41,7 +45,7 @@ popupViewImage.setEventListeners();
 popupAddCard.setEventListeners();
 
 // функция сабмита формы создания карточки
-function handleCreateCardButton({name, link}) {
+function handleCreateCardButton({ name, link }) {
   const card = new Card(
     {
       name,
@@ -49,7 +53,7 @@ function handleCreateCardButton({name, link}) {
       handleCardClick: popupViewImage.open.bind(popupViewImage),
     },
     '.element-template'
-    );
+  );
   cardSection.addItem(card.generateCard());
 
   popupAddCard.close();
@@ -58,14 +62,14 @@ function handleCreateCardButton({name, link}) {
 }
 
 // функция сабмита формы редактирования профиля
-function handleEditProfileSubmitButton({name, info}) {
-  userInfo.setUserInfo({name, info});
+function handleEditProfileSubmitButton({ name, info }) {
+  userInfo.setUserInfo({ name, info });
   popupEditProfile.close();
 }
 
 // функция открытия формы редактирования профиля:
 function handleEditProfileButton() {
-  const data = userInfo.getUserInfo()
+  const data = userInfo.getUserInfo();
   popupInputName.value = data.name;
   popupInputDescription.value = data.info;
   popupInputName.dispatchEvent(inputEvent);
@@ -86,7 +90,14 @@ const cardSection = new Section(
   {
     items: initialCards,
     renderer: (element) => {
-      const card = new Card({ name: element.name, link: element.link, handleCardClick: popupViewImage.open.bind(popupViewImage)}, '.element-template');
+      const card = new Card(
+        {
+          name: element.name,
+          link: element.link,
+          handleCardClick: popupViewImage.open.bind(popupViewImage),
+        },
+        '.element-template'
+      );
       cardSection.addItem(card.generateCard());
     },
   },

@@ -13,5 +13,4 @@ export default class PopupWithImage extends Popup {
     this._image.alt = card.name;
     super.open();
   }
-
 }
