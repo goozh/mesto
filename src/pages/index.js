@@ -45,7 +45,7 @@ popupViewImage.setEventListeners();
 popupAddCard.setEventListeners();
 
 // функция сабмита формы создания карточки
-function handleCreateCardButton({ name, link }) {
+function handleCreateCardButton([ name, link ]) {
   const card = new Card(
     {
       name,
@@ -62,7 +62,7 @@ function handleCreateCardButton({ name, link }) {
 }
 
 // функция сабмита формы редактирования профиля
-function handleEditProfileSubmitButton({ name, info }) {
+function handleEditProfileSubmitButton([ name, info ]) {
   userInfo.setUserInfo({ name, info });
   popupEditProfile.close();
 }
