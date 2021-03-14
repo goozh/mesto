@@ -2,7 +2,7 @@ export default class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
     this._link = data.link;
-    this._handleViewImageButton = data.handleViewImageButton;
+    this._handleCardClick = data.handleCardClick;
     this._templateSelector = templateSelector;
   }
 
@@ -33,7 +33,7 @@ export default class Card {
     this._element
       .querySelector('.element__image')
       .addEventListener('click', () =>
-        this._handleViewImageButton({ name: this._name, link: this._link })
+        this._handleCardClick({ name: this._name, link: this._link })
       );
   }
 
