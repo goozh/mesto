@@ -44,25 +44,32 @@ popupEditProfile.setEventListeners();
 popupViewImage.setEventListeners();
 popupAddCard.setEventListeners();
 
-// функция сабмита формы создания карточки
-function handleCreateCardButton([ name, link ]) {
+// функция создания новой карточки
+function createCard({ name, link, handleCardClick }, templateSelector) {
   const card = new Card(
     {
       name,
       link,
-      handleCardClick: popupViewImage.open.bind(popupViewImage),
+      handleCardClick,
     },
-    '.element-template'
+    templateSelector
   );
-  cardSection.addItem(card.generateCard());
+  return card.generateCard();
+}
 
+// функция сабмита формы создания карточки
+function handleCreateCardButton([name, link]) {
+  cardSection.addItem(
+    createCard(
+      { name, link, handleCardClick: popupViewImage.open.bind(popupViewImage) },
+      '.element-template'
+    )
+  );
   popupAddCard.close();
-  popupAddCardSubmitButton.classList.add(classNames.inactiveButtonClass);
-  popupAddCardSubmitButton.disabled = true;
 }
 
 // функция сабмита формы редактирования профиля
-function handleEditProfileSubmitButton([ name, info ]) {
+function handleEditProfileSubmitButton([name, info]) {
   userInfo.setUserInfo({ name, info });
   popupEditProfile.close();
 }
@@ -90,15 +97,16 @@ const cardSection = new Section(
   {
     items: initialCards,
     renderer: (element) => {
-      const card = new Card(
-        {
-          name: element.name,
-          link: element.link,
-          handleCardClick: popupViewImage.open.bind(popupViewImage),
-        },
-        '.element-template'
+      cardSection.addItem(
+        createCard(
+          {
+            name: element.name,
+            link: element.link,
+            handleCardClick: popupViewImage.open.bind(popupViewImage),
+          },
+          '.element-template'
+        )
       );
-      cardSection.addItem(card.generateCard());
     },
   },
   '.elements__list'
