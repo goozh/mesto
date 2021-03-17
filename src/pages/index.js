@@ -4,6 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import { initialCards } from '../utils/initial-сards.js';
 import { classNames } from '../utils/classNames.js';
 import './index.css';
@@ -34,9 +35,11 @@ const inputEvent = new Event('input');
 const popupViewImage = new PopupWithImage('#popup-view', '.popup__image', '.popup__image-caption');
 const popupEditProfile = new PopupWithForm('#popup-profile-edit', handleEditProfileSubmitButton);
 const popupAddCard = new PopupWithForm('#popup-add-card', handleCreateCardButton);
+
 const userInfo = new UserInfo({
   usernameSelector: '.profile__title',
   userInfoSelector: '.profile__subtitle',
+  avatarSelector: '.profile__avatar',
 });
 
 // установка слушателей для окон
@@ -93,23 +96,63 @@ addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
 
 // отрисовка секции карточек из массива initialCards
-const cardSection = new Section(
+// const cardSection = new Section(
+//   {
+//     items: initialCards,
+//     renderer: (element) => {
+//       cardSection.addItem(
+//         createCard(
+//           {
+//             name: element.name,
+//             link: element.link,
+//             handleCardClick: popupViewImage.open.bind(popupViewImage),
+//           },
+//           '.element-template'
+//         )
+//       );
+//     },
+//   },
+//   '.elements__list'
+// );
+
+// cardSection.renderItems();
+
+const api = new Api(
+  'https://mesto.nomoreparties.co/v1/cohort-21',
   {
-    items: initialCards,
-    renderer: (element) => {
-      cardSection.addItem(
-        createCard(
-          {
-            name: element.name,
-            link: element.link,
-            handleCardClick: popupViewImage.open.bind(popupViewImage),
-          },
-          '.element-template'
-        )
-      );
-    },
-  },
-  '.elements__list'
+    headers: {
+      authorization: '18efd0cc-5a90-47e0-a265-11c194742f4a',
+      'Content-Type': 'application/json',
+    }
+  }
 );
 
-cardSection.renderItems();
+api.getUserInfo().then((res => {
+  userInfo.setUserInfo({name: res.name, info: res.about, link: res.avatar})
+}));
+
+api.getInitialCards().then((res => {
+  const cardSection = new Section(
+    {
+      items: res,
+      renderer: (element) => {
+        cardSection.addItem(
+          createCard(
+            {
+              name: element.name,
+              link: element.link,
+              handleCardClick: popupViewImage.open.bind(popupViewImage),
+            },
+            '.element-template'
+          )
+        );
+      },
+    },
+    '.elements__list'
+  );
+  cardSection.renderItems();
+}))
+
+
+
+
