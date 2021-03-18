@@ -8,13 +8,15 @@ export default class UserInfo {
   getUserInfo() {
     return {
       name: this._usernameElement.textContent,
-      info: this._userInfoElement.textContent,
+      about: this._userInfoElement.textContent,
     };
   }
 
-  setUserInfo({ name, info, link }) {
+  setUserInfo({ name, about, avatar }) {
     this._usernameElement.textContent = name;
-    this._userInfoElement.textContent = info;
-    this._avatarElement.src = link;
+    this._userInfoElement.textContent = about;
+    if (avatar) {
+      this._avatarElement.src = avatar;
+    }
   }
 }

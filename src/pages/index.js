@@ -71,17 +71,11 @@ function handleCreateCardButton([name, link]) {
   popupAddCard.close();
 }
 
-// функция сабмита формы редактирования профиля
-function handleEditProfileSubmitButton([name, info]) {
-  userInfo.setUserInfo({ name, info });
-  popupEditProfile.close();
-}
-
 // функция открытия формы редактирования профиля:
 function handleEditProfileButton() {
   const data = userInfo.getUserInfo();
   popupInputName.value = data.name;
-  popupInputDescription.value = data.info;
+  popupInputDescription.value = data.about;
   popupInputName.dispatchEvent(inputEvent);
   popupInputDescription.dispatchEvent(inputEvent);
   popupEditProfile.open();
@@ -128,7 +122,7 @@ const api = new Api(
 );
 
 api.getUserInfo().then((res => {
-  userInfo.setUserInfo({name: res.name, info: res.about, link: res.avatar})
+  userInfo.setUserInfo(res)
 }));
 
 api.getInitialCards().then((res => {
@@ -153,6 +147,13 @@ api.getInitialCards().then((res => {
   cardSection.renderItems();
 }))
 
-
-
-
+// функция сабмита формы редактирования профиля
+function handleEditProfileSubmitButton([name, about]) {
+  api.patchUserInfo({name, about})
+    .then( res => {
+      if (res) {
+        userInfo.setUserInfo({ name, about });
+      }
+    })
+  popupEditProfile.close();
+}
