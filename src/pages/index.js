@@ -60,17 +60,6 @@ function createCard({ name, link, handleCardClick }, templateSelector) {
   return card.generateCard();
 }
 
-// функция сабмита формы создания карточки
-function handleCreateCardButton([name, link]) {
-  cardSection.addItem(
-    createCard(
-      { name, link, handleCardClick: popupViewImage.open.bind(popupViewImage) },
-      '.element-template'
-    )
-  );
-  popupAddCard.close();
-}
-
 // функция открытия формы редактирования профиля:
 function handleEditProfileButton() {
   const data = userInfo.getUserInfo();
@@ -128,7 +117,7 @@ api.getUserInfo().then((res => {
 api.getInitialCards().then((res => {
   const cardSection = new Section(
     {
-      items: res,
+      items: res.reverse(),
       renderer: (element) => {
         cardSection.addItem(
           createCard(
@@ -156,4 +145,22 @@ function handleEditProfileSubmitButton([name, about]) {
       }
     })
   popupEditProfile.close();
+}
+
+// функция сабмита формы создания карточки
+function handleCreateCardButton([name, link]) {
+  const cardSection = new Section({}, '.elements__list');
+  api.postCard({ name, link }).then(res => {
+    if (res) {
+      cardSection.addItem(
+        createCard(
+          { name, link, handleCardClick: popupViewImage.open.bind(popupViewImage) },
+          '.element-template'
+        )
+      );
+    }
+
+  })
+
+  popupAddCard.close();
 }
