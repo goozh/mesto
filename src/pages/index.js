@@ -13,20 +13,25 @@ import './index.css';
 // элементы секции profile:
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
+const editAvatarButton = document.querySelector('.profile__avatar');
 
 // элементы окна редактирования профиля:
 const popupEditProfileElement = document.querySelector('#popup-profile-edit');
 const popupEditProfileForm = popupEditProfileElement.querySelector('.popup__form');
 const popupInputName = popupEditProfileElement.querySelector('.popup__input_value_name');
 const popupInputDescription = popupEditProfileElement.querySelector('.popup__input_value_desc');
+const editProfileSubmitButton = popupEditProfileElement.querySelector('.popup__submit-button');
 
 // элементы окна добавления карточки:
 const popupAddCardElement = document.querySelector('#popup-add-card');
 const popupAddCardForm = popupAddCardElement.querySelector('.popup__form');
 const popupAddCardSubmitButton = popupAddCardElement.querySelector('.popup__submit-button');
 
-const popupEditAvatarForm = document.querySelector('#popup-avatar-edit .popup__form');
-const editAvatarButton = document.querySelector('.profile__avatar');
+// элементы окна изменения аватара:
+const popupEditAvatarElement = document.querySelector('#popup-avatar-edit');
+const popupEditAvatarForm = popupEditAvatarElement.querySelector('.popup__form');
+const popupEditAvatarSubmitButton = popupEditAvatarElement.querySelector('.popup__submit-button');
+
 
 // валидаторы форм:
 const addCardFormValidator = new FormValidator(classNames, popupAddCardForm);
@@ -153,35 +158,45 @@ api.getInitialCards().then((res => {
 
 // функция сабмита формы редактирования профиля
 function handleEditProfileSubmitButton([name, about]) {
+  editProfileSubmitButton.textContent = 'Сохранение...';
   api.patchUserInfo({name, about})
     .then( res => {
       if (res) {
         userInfo.setUserInfo({ name, about });
+        popupEditProfile.close();
+        editProfileSubmitButton.textContent = 'Сохранить';
       }
     })
-  popupEditProfile.close();
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
 }
 
 // функция сабмита формы создания карточки
 function handleCreateCardButton([name, link]) {
   const cardSection = new Section({}, '.elements__list');
-  api.postCard({ name, link }).then(res => {
-    if (res) {
-      cardSection.addItem(
-        createCard(
-          res,
-          userId,
-          popupViewImage.open.bind(popupViewImage),
-          handleDeleteCardButton,
-          handleLikeButton,
-          '.element-template'
-        )
-      );
-    }
+  popupAddCardSubmitButton.textContent = 'Сохранение...';
+  api.postCard({ name, link })
+    .then(res => {
+      if (res) {
+        cardSection.addItem(
+          createCard(
+            res,
+            userId,
+            popupViewImage.open.bind(popupViewImage),
+            handleDeleteCardButton,
+            handleLikeButton,
+            '.element-template'
+          )
+        );
+      }
+      popupAddCard.close();
+      popupAddCardSubmitButton.textContent = 'Создать';
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    });
 
-  })
-
-  popupAddCard.close();
 }
 
 
@@ -223,12 +238,14 @@ function handleLikeButton(card) {
 }
 
 function handleEditAvatarButton([avatar]) {
+  popupEditAvatarSubmitButton.textContent = 'Сохранение...';
   api.patchAvatar(avatar)
     .then( res => {
       if (res) {
         userInfo.setAvatar({avatar});
         popupAvatarEdit.close.bind(popupAvatarEdit)();
       }
+      popupEditAvatarSubmitButton.textContent = 'Сохранить';
     });
 
 }
