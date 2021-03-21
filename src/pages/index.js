@@ -25,9 +25,13 @@ const popupAddCardElement = document.querySelector('#popup-add-card');
 const popupAddCardForm = popupAddCardElement.querySelector('.popup__form');
 const popupAddCardSubmitButton = popupAddCardElement.querySelector('.popup__submit-button');
 
+const popupEditAvatarForm = document.querySelector('#popup-avatar-edit .popup__form');
+const editAvatarButton = document.querySelector('.profile__avatar');
+
 // валидаторы форм:
 const addCardFormValidator = new FormValidator(classNames, popupAddCardForm);
 const editProfileFormValidator = new FormValidator(classNames, popupEditProfileForm);
+const avatarEditFormValidator = new FormValidator(classNames, popupEditAvatarForm);
 
 // создание события для вызова при заполнении значений инпутов
 const inputEvent = new Event('input');
@@ -37,6 +41,7 @@ const popupViewImage = new PopupWithImage('#popup-view', '.popup__image', '.popu
 const popupEditProfile = new PopupWithForm('#popup-profile-edit', handleEditProfileSubmitButton);
 const popupAddCard = new PopupWithForm('#popup-add-card', handleCreateCardButton);
 const popupConfirm = new PopupConfirm('#popup-delete-card');
+const popupAvatarEdit = new PopupWithForm('#popup-avatar-edit', handleEditAvatarButton);
 
 let userId;
 
@@ -51,14 +56,16 @@ popupEditProfile.setEventListeners();
 popupViewImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupConfirm.setEventListeners();
+popupAvatarEdit.setEventListeners();
 
 // функция создания новой карточки
-function createCard(data, userId, handleCardClick, handleDeleteCard, templateSelector) {
+function createCard(data, userId, handleCardClick, handleDeleteCard, handleLikeButton, templateSelector) {
   const card = new Card(
     data,
     userId,
     handleCardClick,
     handleDeleteCard,
+    handleLikeButton,
     templateSelector
   );
   return card.generateCard();
@@ -77,10 +84,13 @@ function handleEditProfileButton() {
 // обработка кнопок открытия окон:
 editProfileButton.addEventListener('click', handleEditProfileButton);
 addCardButton.addEventListener('click', popupAddCard.open.bind(popupAddCard));
+editAvatarButton.addEventListener('click', popupAvatarEdit.open.bind(popupAvatarEdit));
+
 
 // включение валидаторов форм:
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
+avatarEditFormValidator.enableValidation();
 
 // отрисовка секции карточек из массива initialCards
 // const cardSection = new Section(
@@ -130,6 +140,7 @@ api.getInitialCards().then((res => {
             userId,
             popupViewImage.open.bind(popupViewImage),
             handleDeleteCardButton,
+            handleLikeButton,
             '.element-template'
           )
         );
@@ -162,6 +173,7 @@ function handleCreateCardButton([name, link]) {
           userId,
           popupViewImage.open.bind(popupViewImage),
           handleDeleteCardButton,
+          handleLikeButton,
           '.element-template'
         )
       );
@@ -188,4 +200,35 @@ function handleDeleteCardButton(card) {
   }
 
   popupConfirm.setSubmitHandler(handleSubmitDelete);
+}
+
+function handleLikeButton(card) {
+  if (card.isLiked(card._likes)) {
+    api.deleteLike(card._id)
+    .then( res => {
+      if (res) {
+        card._element.querySelector('.element__like').classList.toggle('element__like_active');
+        card.setLikeCount(res.likes);
+      }
+    })
+  } else {
+    api.putLike(card._id)
+    .then( res => {
+      if (res) {
+        card._element.querySelector('.element__like').classList.toggle('element__like_active');
+        card.setLikeCount(res.likes);
+      }
+    })
+  }
+}
+
+function handleEditAvatarButton([avatar]) {
+  api.patchAvatar(avatar)
+    .then( res => {
+      if (res) {
+        userInfo.setAvatar({avatar});
+        popupAvatarEdit.close.bind(popupAvatarEdit)();
+      }
+    });
+
 }

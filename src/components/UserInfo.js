@@ -16,7 +16,11 @@ export default class UserInfo {
     this._usernameElement.textContent = name;
     this._userInfoElement.textContent = about;
     if (avatar) {
-      this._avatarElement.src = avatar;
+      this._avatarElement.style.backgroundImage = `url(${avatar})`;
     }
+  }
+
+  setAvatar({ avatar }) {
+    this._avatarElement.style.backgroundImage = `url(${avatar})`;
   }
 }

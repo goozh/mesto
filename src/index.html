@@ -12,7 +12,9 @@
     </header>
     <main class="main">
       <section class="profile">
-        <img src="<%=require('./images/avatar.jpg')%>" alt="Фото профиля пользователя" class="profile__avatar">
+        <div class="profile__avatar">
+          <!-- <img src="<%=require('./images/avatar.jpg')%>" alt="Фото профиля пользователя" class="profile__avatar"> -->
+        </div>
         <div class="profile__info">
            <div class="profile__line-container">
               <h1 class="profile__title">Программист</h1>
@@ -83,6 +85,17 @@
         <h2 class="popup__title popup__title_type_dialog">Вы уверены?</h2>
         <form class="popup__form" novalidate>
           <button class="popup__submit-button" id="delete-card-button" name="delete-card-button" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup" id="popup-avatar-edit">
+      <div class="popup__container popup__container_type_avatar">
+        <button class="popup__close" name="popup__close" type="button"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form class="popup__form" novalidate>
+          <input class="popup__input popup__input_value_name" type="url" id="avatar-link" required placeholder="Ссылка на картинку">
+          <span class="popup__input-error avatar-link-error">Ошибка</span>
+          <button class="popup__submit-button" id="create-card-button" name="create-card-button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>

@@ -64,10 +64,59 @@ export default class Api {
       });
   }
 
-  deleteCard(_id) {
-    return fetch(this._baseUrl + '/cards/' + _id, {
+  deleteCard(cardId) {
+    return fetch(this._baseUrl + '/cards/' + cardId, {
       method: 'DELETE',
       headers: this._options.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  putLike(cardId) {
+    return fetch(this._baseUrl + '/cards/likes/' + cardId, {
+      method: 'PUT',
+      headers: this._options.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  deleteLike(cardId) {
+    return fetch(this._baseUrl + '/cards/likes/' + cardId, {
+      method: 'DELETE',
+      headers: this._options.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  patchAvatar(url) {
+    return fetch(this._baseUrl + '/users/me/avatar', {
+      method: 'PATCH',
+      headers: this._options.headers,
+      body: JSON.stringify({ avatar: url })
     })
       .then(res => {
         if (res.ok) {

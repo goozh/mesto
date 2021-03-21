@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, userId, handleCardClick, handleDeleteCardButton, templateSelector) {
+  constructor(data, userId, handleCardClick, handleDeleteCardButton, handleLikeButton, templateSelector) {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -8,6 +8,7 @@ export default class Card {
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCardButton = handleDeleteCardButton;
+    this._handleLikeButton = handleLikeButton;
     this._templateSelector = templateSelector;
   }
 
@@ -20,14 +21,19 @@ export default class Card {
     return element;
   }
 
-  _handleLikeButton() {
-    this._element.querySelector('.element__like').classList.toggle('element__like_active');
+  _setLikeState(isLiked) {
+    if (isLiked) {
+      this._element.querySelector('.element__like').classList.add('element__like_active');
+    } else {
+      this._element.querySelector('.element__like').classList.remove('element__like_active');
+    }
+
   }
 
   _setEventListeners() {
     this._element
       .querySelector('.element__like')
-      .addEventListener('click', () => this._handleLikeButton());
+      .addEventListener('click', () => this._handleLikeButton(this));
     this._element
       .querySelector('.element__image')
       .addEventListener('click', () =>
@@ -44,15 +50,37 @@ export default class Card {
     }
   }
 
+  setLikeCount(likes) {
+    this._likes = likes;
+    if (this._likes.length) {
+      this._element.querySelector('.element__like-count').textContent = this._likes.length;
+      if (this.isLiked(this._likes)) {
+        this._setLikeState(true);
+      }
+    } else {
+      this._element.querySelector('.element__like-count').textContent = '';
+      this._setLikeState(false);
+    }
+
+  }
+
+  isLiked(likes) {
+    for (let i = 0; i < likes.length; i++) {
+      if (likes[i]._id === this._userId) {
+        return true
+      }
+    }
+    return false;
+  }
+
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
     this._element.querySelector('.element__image').src = this._link;
     this._element.querySelector('.element__title').textContent = this._name;
     this._element.querySelector('.element__image').alt = this._name;
-    if (this._likes.length) {
-      this._element.querySelector('.element__like-count').textContent = this._likes.length;
-    }
+    this.setLikeCount(this._likes);
+
     return this._element;
   }
 }
