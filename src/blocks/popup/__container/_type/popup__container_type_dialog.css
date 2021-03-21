@@ -1,0 +1,17 @@
+.popup__container_type_dialog{
+  max-width: 430px;
+  width: 100%;
+  min-height: 181px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  color: #000000;
+  padding: 0;
+  border: 0;
+}
+
+@media screen and (max-width: 525px) {
+  .popup__container_type_dialog {
+    width: 282px;
+    }
+}

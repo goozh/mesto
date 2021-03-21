@@ -3,6 +3,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupConfirm from '../components/PopupConfirm.js'
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import { initialCards } from '../utils/initial-сards.js';
@@ -35,6 +36,9 @@ const inputEvent = new Event('input');
 const popupViewImage = new PopupWithImage('#popup-view', '.popup__image', '.popup__image-caption');
 const popupEditProfile = new PopupWithForm('#popup-profile-edit', handleEditProfileSubmitButton);
 const popupAddCard = new PopupWithForm('#popup-add-card', handleCreateCardButton);
+const popupConfirm = new PopupConfirm('#popup-delete-card');
+
+let userId;
 
 const userInfo = new UserInfo({
   usernameSelector: '.profile__title',
@@ -46,15 +50,15 @@ const userInfo = new UserInfo({
 popupEditProfile.setEventListeners();
 popupViewImage.setEventListeners();
 popupAddCard.setEventListeners();
+popupConfirm.setEventListeners();
 
 // функция создания новой карточки
-function createCard({ name, link, handleCardClick }, templateSelector) {
+function createCard(data, userId, handleCardClick, handleDeleteCard, templateSelector) {
   const card = new Card(
-    {
-      name,
-      link,
-      handleCardClick,
-    },
+    data,
+    userId,
+    handleCardClick,
+    handleDeleteCard,
     templateSelector
   );
   return card.generateCard();
@@ -111,7 +115,8 @@ const api = new Api(
 );
 
 api.getUserInfo().then((res => {
-  userInfo.setUserInfo(res)
+  userInfo.setUserInfo(res);
+  userId = res._id;
 }));
 
 api.getInitialCards().then((res => {
@@ -121,11 +126,10 @@ api.getInitialCards().then((res => {
       renderer: (element) => {
         cardSection.addItem(
           createCard(
-            {
-              name: element.name,
-              link: element.link,
-              handleCardClick: popupViewImage.open.bind(popupViewImage),
-            },
+            element,
+            userId,
+            popupViewImage.open.bind(popupViewImage),
+            handleDeleteCardButton,
             '.element-template'
           )
         );
@@ -154,7 +158,10 @@ function handleCreateCardButton([name, link]) {
     if (res) {
       cardSection.addItem(
         createCard(
-          { name, link, handleCardClick: popupViewImage.open.bind(popupViewImage) },
+          res,
+          userId,
+          popupViewImage.open.bind(popupViewImage),
+          handleDeleteCardButton,
           '.element-template'
         )
       );
@@ -163,4 +170,22 @@ function handleCreateCardButton([name, link]) {
   })
 
   popupAddCard.close();
+}
+
+
+
+function handleDeleteCardButton(card) {
+  popupConfirm.open.bind(popupConfirm)();
+
+  function handleSubmitDelete() {
+    api.deleteCard(card._id)
+    .then( res => {
+      if (res) {
+        card._element.remove();
+        popupConfirm.close.bind(popupConfirm)();
+      }
+    })
+  }
+
+  popupConfirm.setSubmitHandler(handleSubmitDelete);
 }

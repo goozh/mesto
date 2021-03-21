@@ -64,5 +64,21 @@ export default class Api {
       });
   }
 
+  deleteCard(_id) {
+    return fetch(this._baseUrl + '/cards/' + _id, {
+      method: 'DELETE',
+      headers: this._options.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
 }
 
