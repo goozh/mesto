@@ -91,33 +91,10 @@ editProfileButton.addEventListener('click', handleEditProfileButton);
 addCardButton.addEventListener('click', popupAddCard.open.bind(popupAddCard));
 editAvatarButton.addEventListener('click', popupAvatarEdit.open.bind(popupAvatarEdit));
 
-
 // включение валидаторов форм:
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
 avatarEditFormValidator.enableValidation();
-
-// отрисовка секции карточек из массива initialCards
-// const cardSection = new Section(
-//   {
-//     items: initialCards,
-//     renderer: (element) => {
-//       cardSection.addItem(
-//         createCard(
-//           {
-//             name: element.name,
-//             link: element.link,
-//             handleCardClick: popupViewImage.open.bind(popupViewImage),
-//           },
-//           '.element-template'
-//         )
-//       );
-//     },
-//   },
-//   '.elements__list'
-// );
-
-// cardSection.renderItems();
 
 const api = new Api(
   'https://mesto.nomoreparties.co/v1/cohort-21',
@@ -200,7 +177,7 @@ function handleCreateCardButton([name, link]) {
 }
 
 
-
+// функция обработки нажатия иконки корзины
 function handleDeleteCardButton(card) {
   popupConfirm.open.bind(popupConfirm)();
 

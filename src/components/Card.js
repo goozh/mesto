@@ -1,5 +1,6 @@
 export default class Card {
   constructor(data, userId, handleCardClick, handleDeleteCardButton, handleLikeButton, templateSelector) {
+    this._data = data;
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -37,7 +38,7 @@ export default class Card {
     this._element
       .querySelector('.element__image')
       .addEventListener('click', () =>
-        this._handleCardClick({ name: this._name, link: this._link })
+        this._handleCardClick(this._data)
       );
     if (this._cardOwnerId === this._userId) {
       this._element
