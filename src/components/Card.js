@@ -1,13 +1,13 @@
 export default class Card {
-  constructor({ data, userId, handleCardClick, handleDeleteCardButton, handleLikeButton }, templateSelector) {
+  constructor({ data, userId, handleCardClickButton, handleDeleteCardButton, handleLikeButton }, templateSelector) {
     this._data = data;
     this._name = data.name;
     this._link = data.link;
-    this._id = data._id;
+    this.id = data._id;
     this._likes = data.likes;
     this._cardOwnerId = data.owner._id;
     this._userId = userId;
-    this._handleCardClick = handleCardClick;
+    this._handleCardClickButton = handleCardClickButton;
     this._handleDeleteCardButton = handleDeleteCardButton;
     this._handleLikeButton = handleLikeButton;
     this._templateSelector = templateSelector;
@@ -38,7 +38,7 @@ export default class Card {
     this._element
       .querySelector('.element__image')
       .addEventListener('click', () =>
-        this._handleCardClick(this._data)
+        this._handleCardClickButton(this._data)
       );
     if (this._cardOwnerId === this._userId) {
       this._element
@@ -65,13 +65,21 @@ export default class Card {
 
   }
 
-  isLiked(likes) {
-    for (let i = 0; i < likes.length; i++) {
-      if (likes[i]._id === this._userId) {
+  isLiked() {
+    for (let i = 0; i < this._likes.length; i++) {
+      if (this._likes[i]._id === this._userId) {
         return true
       }
     }
     return false;
+  }
+
+  remove() {
+    this._element.remove()
+  }
+
+  toogleLikeState() {
+    this._element.querySelector('.element__like').classList.toggle('element__like_active');
   }
 
   generateCard() {
