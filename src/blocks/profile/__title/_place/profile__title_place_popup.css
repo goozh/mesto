@@ -1,4 +1,19 @@
 .profile__title_place_popup {
   font-size: 15px;
   line-height: 1.25;
+  text-shadow: black 0 0 1px;
+}
+
+@media screen and (max-width: 710px) {
+  .profile__title_place_popup  {
+    font-size: 15px;
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__title_place_popup  {
+    font-size: 15px;
+    margin-left: 0;
+  }
 }
