@@ -55,6 +55,26 @@ const userInfo = new UserInfo({
   avatarSelector: '.profile__avatar',
 });
 
+const cardSection = new Section(
+  {
+    renderer: (element) => {
+      cardSection.addItem(
+        createCard(
+          {
+            data: element,
+            userId,
+            handleCardClickButton: popupViewImage.open.bind(popupViewImage),
+            handleDeleteCardButton,
+            handleLikeButton,
+          },
+          '.element-template'
+        )
+      );
+    },
+  },
+  '.elements__list'
+);
+
 // установка слушателей для окон
 popupEditProfile.setEventListeners();
 popupViewImage.setEventListeners();
@@ -126,7 +146,6 @@ function handleEditProfileSubmitButton([name, about]) {
 
 // функция сабмита формы создания карточки
 function handleCreateCardButton([name, link]) {
-  const cardSection = new Section({}, '.elements__list');
   popupAddCardSubmitButton.textContent = 'Сохранение...';
   api
     .postCard({ name, link })
@@ -226,27 +245,7 @@ Promise.all([getUserInfoPromis, getInitialCardsPromis])
     userInfo.setUserInfo(results[0]);
     userId = results[0]._id;
 
-    const cardSection = new Section(
-      {
-        items: results[1].reverse(),
-        renderer: (element) => {
-          cardSection.addItem(
-            createCard(
-              {
-                data: element,
-                userId,
-                handleCardClickButton: popupViewImage.open.bind(popupViewImage),
-                handleDeleteCardButton,
-                handleLikeButton,
-              },
-              '.element-template'
-            )
-          );
-        },
-      },
-      '.elements__list'
-    );
-    cardSection.renderItems();
+    cardSection.renderItems(results[1].reverse());
   })
   .catch((err) => {
     console.log(`Ошибка: ${err}`);
