@@ -72,4 +72,8 @@ export default class Api {
       .then(this._checkResponse);
   }
 
+  getInitialData() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+  }
+
 }

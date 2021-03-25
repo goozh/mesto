@@ -11,6 +11,7 @@ export default class Card {
     this._handleDeleteCardButton = handleDeleteCardButton;
     this._handleLikeButton = handleLikeButton;
     this._templateSelector = templateSelector;
+    this.isLiked = false;
   }
 
   _getTemplate() {
@@ -55,7 +56,7 @@ export default class Card {
     this._likes = likes;
     if (this._likes.length) {
       this._element.querySelector('.element__like-count').textContent = this._likes.length;
-      if (this.isLiked(this._likes)) {
+      if (this.isLiked) {
         this._setLikeState(true);
       }
     } else {
@@ -65,7 +66,7 @@ export default class Card {
 
   }
 
-  isLiked() {
+  _likeStateInitialization() {
     for (let i = 0; i < this._likes.length; i++) {
       if (this._likes[i]._id === this._userId) {
         return true
@@ -80,6 +81,7 @@ export default class Card {
 
   toogleLikeState() {
     this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    this.isLiked = !this.isLiked;
   }
 
   generateCard() {
@@ -88,6 +90,7 @@ export default class Card {
     this._element.querySelector('.element__image').src = this._link;
     this._element.querySelector('.element__title').textContent = this._name;
     this._element.querySelector('.element__image').alt = this._name;
+    this.isLiked = this._likeStateInitialization();
     this.setLikeCount(this._likes);
 
     return this._element;

@@ -194,7 +194,7 @@ function handleDeleteCardButton(card) {
 }
 
 function handleLikeButton(card) {
-  if (card.isLiked()) {
+  if (card.isLiked) {
     api
       .deleteLike(card.id)
       .then((res) => {
@@ -237,10 +237,7 @@ function handleEditAvatarButton([avatar]) {
     });
 }
 
-const getUserInfoPromis = api.getUserInfo();
-const getInitialCardsPromis = api.getInitialCards();
-
-Promise.all([getUserInfoPromis, getInitialCardsPromis])
+api.getInitialData()
   .then((results) => {
     userInfo.setUserInfo(results[0]);
     userId = results[0]._id;
