@@ -4,3 +4,9 @@
   line-height: 1.25;
   text-shadow: black 0 0 1px;
 }
+
+@media screen and (max-width: 320px) {
+  .profile__subtitle_place_popup {
+    max-width: 150px;
+  }
+}

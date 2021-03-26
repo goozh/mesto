@@ -41,11 +41,19 @@ const avatarEditFormValidator = new FormValidator(classNames, popupEditAvatarFor
 const inputEvent = new Event('input');
 
 // создание экземпляров popup окон
-const popupViewImage = new PopupWithImage('#popup-view', '.popup__image', '.popup__image-caption');
-const popupEditProfile = new PopupWithForm('#popup-profile-edit', handleEditProfileSubmitButton);
-const popupAddCard = new PopupWithForm('#popup-add-card', handleCreateCardButton);
-const popupConfirm = new PopupConfirm('#popup-delete-card');
-const popupAvatarEdit = new PopupWithForm('#popup-avatar-edit', handleEditAvatarButton);
+const popupViewImage = new PopupWithImage(
+  {
+    popupSelector: '#popup-view',
+    imageSelector: '.popup__image',
+    imageTitleSelector: '.popup__image-caption',
+    profileAvatarSelector: '.profile__avatar',
+    profileTitleSelector: '.profile__title',
+    profileSubtitleSelector: '.profile__subtitle',
+  });
+const popupEditProfile = new PopupWithForm({ popupSelector: '#popup-profile-edit' }, handleEditProfileSubmitButton);
+const popupAddCard = new PopupWithForm({ popupSelector: '#popup-add-card' }, handleCreateCardButton);
+const popupConfirm = new PopupConfirm({ popupSelector: '#popup-delete-card' });
+const popupAvatarEdit = new PopupWithForm({ popupSelector: '#popup-avatar-edit' }, handleEditAvatarButton);
 
 let userId;
 
